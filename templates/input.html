@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Carvana Trip/Location Summary</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+  background-color: #666;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: white;
+}
+
+/* Container for flexboxes */
+section {
+  display: -webkit-flex;
+  display: flex;
+}
+
+/* Style the navigation menu */
+nav {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  background: #ccc;
+  padding: 20px;
+}
+
+/* Style the list inside the menu */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Style the content */
+article {
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+  background-color: #f1f1f1;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Style the footer */
+footer {
+  background-color: #777;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+/* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
+@media (max-width: 600px) {
+  section {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h2>Carvana Trip/Location Summary</h2>
+</header>
+
+<section> 
+  <article>
+  <div> 
+    <div>
+      <label for="loc">INPUT LOCATION:</label>
+      <input type="string" id="loc" name="loc" required size="50">
+    </div>
+    </div>
+
+    <hr></hr>
+
+    <div>
+      <label for="output">LOCATION INFO:</label>
+      <input type="string" id="output" name="output" required size="150">
+     </div>
+     <div>
+      <label for="orig">ORIGIN TRIPS:</label>
+      <textarea name="orig" id="orig" rows="14" cols="10" wrap="soft" style="width:1000px;height:200px;overflow:scroll;"> </textarea>
+     </div>
+     <div>
+      <label for="dest">DESTINATION TRIPS:</label>
+      <textarea name="dest" id="dest" rows="14" cols="10" wrap="soft" style="width:1000px;height:200px;overflow:scroll;"> </textarea>
+     </div>
+
+
+
+    <div>
+  </article>
+</section>
+
+<footer>
+    <div>
+       <button onclick="doWork();">Submit</button>
+       <button onclick="resetDivs();">Reset</button>
+    </div>
+</footer>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+
+
+
+<script>
+var desiredvalue;
+
+function resetDivs() {
+document.getElementById("loc").value='';
+document.getElementById("output").value='';
+};
+
+function doWork() {
+var arr = {'loc': document.getElementById("loc").value,
+};
+
+console.log(arr);
+
+$.post( "/receiver", arr, function(response) {var eff=response;
+var dat = eff.split(',');
+document.getElementById("output").value=dat[0];
+document.getElementById("orig").value=dat[1];
+document.getElementById("dest").value=dat[2];
+});
+};
+
+
+</script>
+
+</body>
+</html>
